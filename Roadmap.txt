@@ -1,0 +1,23 @@
+                         NOMADIQ
+                            │
+             ┌──────────────┴──────────────┐
+             │                             │
+        DISCOVER & DECIDE             PLAN & ASSIST
+             │                             │
+             ▼                             ▼
+       AI Recommendation              AI Trip Planner
+             │                             │
+       ┌─────┼─────┐                 ┌─────┼─────┐
+       ▼     ▼     ▼                 ▼     ▼     ▼
+    Budget Weather Preferences    Itinerary Budget Activities
+       │     │     │                 │     │     │
+       └─────┼─────┘                 └─────┼─────┘
+             │                             │
+             └──────────────┬──────────────┘
+                            ▼
+                     AI Assistant
+                            │
+                    "Change Day 3"
+                    "Make it cheaper"
+                    "Is this worth it?"
+                    "What if it rains?"

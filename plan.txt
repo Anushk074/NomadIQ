@@ -1,0 +1,561 @@
+🧭 NOMADIQ — MASTER ROADMAP
+
+This is the roadmap I want us to follow.
+
+PHASE 0 ─ Product & Architecture
+        │
+        ▼
+PHASE 1 ─ Project Foundation
+        │
+        ▼
+PHASE 2 ─ Identity & Users
+        │
+        ▼
+PHASE 3 ─ Trip Management
+        │
+        ▼
+PHASE 4 ─ Travel Discovery
+        │
+        ▼
+PHASE 5 ─ AI Service
+        │
+        ▼
+PHASE 6 ─ AI Trip Planner
+        │
+        ▼
+PHASE 7 ─ Redis + Messaging
+        │
+        ▼
+PHASE 8 ─ React Frontend
+        │
+        ▼
+PHASE 9 ─ External Travel APIs
+        │
+        ▼
+PHASE 10 ─ Docker + Local Production
+        │
+        ▼
+PHASE 11 ─ Azure
+        │
+        ▼
+PHASE 12 ─ CI/CD
+        │
+        ▼
+PHASE 13 ─ Observability + Security
+        │
+        ▼
+PHASE 14 ─ Portfolio / Production Polish
+
+But we're not going to blindly follow that order for every feature. Some frontend work will happen alongside backend work.
+
+PHASE 0 — Product & Architecture
+Goal
+
+Know exactly what we're building before coding.
+
+We'll define:
+
+Product
+Target user
+Problem
+User journeys
+MVP
+V2 features
+V3 features
+What we explicitly won't build
+Architecture
+React architecture
+.NET architecture
+Microservice boundaries
+Database design
+API contracts
+AI architecture
+Docker architecture
+Cloud architecture
+Documentation
+
+We'll create:
+
+docs/
+├── product-requirements.md
+├── architecture.md
+├── database-design.md
+├── api-design.md
+├── ai-architecture.md
+└── decisions/
+
+This is useful for both development and interviews.
+
+PHASE 1 — Project Foundation
+
+We'll establish the actual repository.
+
+NomadIQ/
+│
+├── frontend/
+│
+├── backend/
+│   ├── gateway/
+│   ├── services/
+│   └── shared/
+│
+├── infrastructure/
+│
+├── docs/
+│
+├── scripts/
+│
+├── tests/
+│
+├── docker-compose.yml
+├── .gitignore
+├── README.md
+└── LICENSE
+
+Technologies:
+
+React
+.NET
+Docker
+SQL Server
+Redis
+RabbitMQ
+Git
+
+Initially, only the infrastructure we actually need.
+
+PHASE 2 — Identity
+
+We'll learn:
+
+ASP.NET Core Identity concepts
+JWT
+Authentication
+Authorization
+Claims
+Roles
+Refresh tokens
+Password hashing
+React authentication flow
+
+Architecture:
+
+React
+ ↓
+API Gateway
+ ↓
+Identity Service
+ ↓
+SQL Server
+
+This directly helps your .NET interviews.
+
+PHASE 3 — Trip Management
+
+This becomes our first real business service.
+
+Users can:
+
+Create Trip
+Edit Trip
+Delete Trip
+View Trip
+Add destinations
+Set budget
+Set dates
+Set preferences
+
+We'll learn:
+
+EF Core
+Migrations
+Relationships
+DTOs
+Validation
+Repository/service patterns where justified
+REST API design
+Unit testing
+PHASE 4 — Travel Discovery
+
+Now we start making NomadIQ resemble the product we actually want.
+
+User:
+
+"I want a relaxing 3-day trip under ₹10,000."
+
+System:
+
+Preferences
+   ↓
+Discovery Service
+   ↓
+Destination candidates
+   ↓
+Scoring
+   ↓
+Recommendations
+
+We'll initially use our own dataset/mock data.
+
+This is important.
+
+We don't want to spend the first week fighting external APIs.
+
+PHASE 5 — AI Service
+
+Now we introduce the AI.
+
+Architecture:
+
+Trip Service
+     │
+     ▼
+AI Service
+     │
+     ▼
+AI Provider
+
+But we'll make the provider abstract:
+
+IAIProvider
+    │
+    ├── OllamaProvider
+    ├── GeminiProvider
+    └── OpenAIProvider
+
+This teaches you AI integration rather than one particular API.
+
+PHASE 6 — AI Trip Planner
+
+Now the real NomadIQ feature.
+
+User:
+
+"I have ₹80,000, 5 days, starting from Delhi. I want nature and food."
+
+AI:
+
+User Request
+     ↓
+AI Orchestrator
+     ↓
+Destination Tool
+     ↓
+Budget Tool
+     ↓
+Weather Tool
+     ↓
+Activity Tool
+     ↓
+AI reasoning
+     ↓
+Structured itinerary
+
+Then:
+
+Day 1
+Day 2
+Day 3
+Day 4
+Day 5
+
+This is one of the most important phases of the project.
+
+PHASE 7 — Redis + Messaging
+
+Only after we have a working system.
+
+Redis
+
+We'll use it for things like:
+
+Destination cache
+AI response cache
+External API cache
+Frequently accessed data
+RabbitMQ
+
+Later:
+
+Trip Created
+     ↓
+Message
+     ↓
+Notification Service
+
+and:
+
+Price Changed
+     ↓
+Message
+     ↓
+Notification
+
+This gives you actual distributed-system knowledge.
+
+PHASE 8 — React
+
+We'll build the actual polished interface.
+
+Inspired by the mood-first UX we saw in your friend's application, but not copying it.
+
+Main screens:
+
+Landing
+   ↓
+Mood / Preferences
+   ↓
+Discovery
+   ↓
+Destination Details
+   ↓
+Compare
+   ↓
+Trip Planner
+   ↓
+Itinerary
+   ↓
+AI Assistant
+   ↓
+My Trips
+
+React topics we'll deliberately learn:
+
+Components
+Hooks
+Context
+State management
+API integration
+Error handling
+Loading states
+Forms
+Routing
+Protected routes
+Performance
+TypeScript
+PHASE 9 — External Travel APIs
+
+Only now.
+
+We'll investigate real APIs for:
+
+Flights
+Hotels
+Weather
+Maps
+Currency
+Places
+
+And this is where Gemini becomes particularly useful.
+
+Gemini's job:
+
+Research current APIs, free tiers, limitations, pricing, documentation and alternatives.
+
+Then I make the architecture decision.
+
+Then Claude implements it.
+
+This prevents us from designing the system around an API that later turns out to be expensive or unavailable.
+
+PHASE 10 — Docker
+
+Eventually:
+
+docker compose up -d
+
+should give us something like:
+
+NomadIQ
+│
+├── React
+├── API Gateway
+├── Identity Service
+├── Trip Service
+├── Discovery Service
+├── AI Service
+├── SQL Server
+├── Redis
+└── RabbitMQ
+
+And you should be able to clone the repository on another machine and get the development environment running.
+
+That's a great portfolio feature.
+
+PHASE 11 — Azure
+
+Only after the local application works.
+
+Potentially:
+
+Azure
+│
+├── Resource Group
+├── Container Apps
+├── Azure SQL
+├── Key Vault
+├── Managed Identity
+└── Application Insights
+
+Only free/covered resources.
+
+If something doesn't fit our budget:
+
+We don't deploy it.
+
+We'll learn that Azure service separately.
+
+PHASE 12 — CI/CD
+
+We'll use:
+
+GitHub
+   ↓
+GitHub Actions
+   ↓
+Build
+   ↓
+Test
+   ↓
+Docker Build
+   ↓
+Deploy
+
+And you'll understand the entire pipeline instead of just having a YAML file you don't understand.
+
+PHASE 13 — Security + Observability
+
+We'll implement:
+
+JWT security
+Secrets management
+Key Vault
+Managed Identity
+Input validation
+Rate limiting
+CORS
+Logging
+Distributed tracing
+Application Insights
+Error handling
+Health checks
+
+This is very valuable for senior .NET interviews.
+
+PHASE 14 — Portfolio
+
+Finally:
+
+README
+What is NomadIQ?
+Architecture
+Features
+Tech stack
+Screenshots
+How to run
+Architecture diagram
+AI architecture
+Cloud architecture
+CI/CD
+Future roadmap
+Portfolio
+
+We'll have:
+
+GitHub repository
+       +
+Live demo
+       +
+Architecture diagram
+       +
+Technical documentation
+       +
+Demo video
+
+That's the final product.
+
+🤖 How we'll use the three AIs
+
+This is important. Let's make the workflow official.
+
+🧠 ME — ChatGPT
+
+Architect + Mentor + Reviewer
+
+I decide with you:
+
+WHAT?
+WHY?
+ARCHITECTURE?
+TRADE-OFFS?
+
+I'll also teach you what we're building.
+
+👨‍💻 CLAUDE
+
+Implementation Engineer
+
+Claude gets:
+
+Approved architecture
++
+Detailed task
++
+Acceptance criteria
+
+and writes the code.
+
+We don't tell Claude:
+
+"Build NomadIQ."
+
+That's too broad.
+
+We tell Claude:
+
+"Implement Trip Service according to this approved architecture..."
+
+Small, controlled tasks.
+
+🔎 GEMINI
+
+Researcher + Independent Reviewer
+
+Gemini handles:
+
+Current APIs
+Azure pricing
+Azure documentation
+AI model capabilities
+External service research
+Second opinions
+
+Especially information that changes frequently.
+
+And YOU
+
+You're not just the person giving prompts.
+
+You're:
+
+Product Owner + Developer + Final Decision Maker
+
+Your rule:
+
+Don't merge code you don't understand.
+
+You don't need to understand every line immediately.
+
+But if Claude implements:
+
+JWT
+Redis
+RabbitMQ
+EF Core transaction
+AI tool calling
+Docker networking
+Azure Managed Identity
+
+we'll stop and learn the concept.
+
+That's how this becomes interview preparation through actual engineering.

@@ -1,0 +1,49 @@
+Our actual service architecture
+
+I'd start with 5 meaningful services:
+
+                         API Gateway
+                              │
+          ┌───────────────────┼──────────────────┐
+          │                   │                  │
+          ▼                   ▼                  ▼
+    Identity Service      Trip Service      Discovery Service
+                              │                  │
+                              │                  ├── Destinations
+                              │                  ├── Recommendations
+                              │                  └── Scoring
+                              │
+                              ▼
+                        AI Service
+                              │
+                    ┌─────────┼─────────┐
+                    ▼         ▼         ▼
+                 Weather    Flights    Hotels
+                 Tool       Tool       Tool
+
+
+
+D:\AnushkWorks\Projects\NomadIQ
+│
+├── docs\                  ← Architecture, requirements, decisions
+│
+├── src\                   ← Actual application code
+│   │
+│   ├── frontend\          ← React application
+│   │
+│   └── backend\           ← .NET solution + microservices
+│
+├── tests\                 ← Automated tests
+│
+├── infrastructure\       ← Docker, deployment, cloud configuration
+│
+├── scripts\               ← Utility/setup scripts
+│
+├── Final.txt              ← Your existing notes
+├── Roadmap.txt
+├── Service architecture.txt
+├── plan.txt
+│
+├── .gitignore
+├── README.md
+└── NomadIQ.sln

@@ -1,0 +1,37 @@
+Our NomadIQ stack is becoming quite strong
+                    NOMADIQ
+                       │
+                    React
+                       │
+                 API Gateway
+                       │
+       ┌───────────────┼────────────────┐
+       ▼               ▼                ▼
+ Identity          Trip Service     Discovery
+ Service                │                │
+       │                │                │
+       └────────────────┼────────────────┘
+                        ▼
+                    AI Service
+                        │
+                 AI Orchestrator
+                        │
+          ┌─────────────┼─────────────┐
+          ▼             ▼             ▼
+       Weather        Hotels        Flights
+                        │
+                   External APIs
+
+Infrastructure:
+Docker + SQL + Redis + RabbitMQ
+
+Security:
+JWT + Refresh Tokens + Authorization
+
+Deployment:
+Netlify → React
+Render → Docker/.NET
+Supabase → PostgreSQL candidate
+
+Cloud learning:
+Azure
