@@ -1,8 +1,9 @@
 # Local development infrastructure for NomadIQ.
 #
-# Credentials below are LOCAL DEVELOPMENT ONLY. They match
-# src/backend/IdentityService/appsettings.Development.json and must
-# never be reused for staging/production environments.
+# Credentials below are LOCAL DEVELOPMENT ONLY. They match each service's
+# appsettings.Development.json and must never be reused for staging/production
+# environments. Each service gets its own PostgreSQL database/container to
+# preserve per-service data ownership (see docs/DATABASE.md).
 services:
   identity-db:
     image: postgres:16
@@ -22,5 +23,24 @@ services:
       timeout: 5s
       retries: 10
 
+  trip-db:
+    image: postgres:16
+    container_name: nomadiq-trip-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: nomadiq_trip
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - nomadiq_trip_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d nomadiq_trip"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
 volumes:
   nomadiq_identity_db_data:
+  nomadiq_trip_db_data:
