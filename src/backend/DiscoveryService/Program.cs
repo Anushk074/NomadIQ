@@ -1,3 +1,8 @@
+using DiscoveryService.Application.Abstractions;
+using DiscoveryService.Application.Services;
+using DiscoveryService.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddDbContext<DiscoveryDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DiscoveryDatabase")));
+
+builder.Services.AddScoped<IDestinationService, DestinationService>();
 
 var app = builder.Build();
 
