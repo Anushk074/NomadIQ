@@ -4,7 +4,10 @@ using AIService.Application.Services;
 using AIService.Infrastructure.Ai;
 using AIService.Infrastructure.Clients;
 using AIService.Infrastructure.Configuration;
+using AIService.Infrastructure.Http;
+using AIService.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -42,6 +45,12 @@ builder.Services
 
 builder.Services.AddAuthorization();
 
+builder.Services.AddDbContext<AiDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("AiDatabase")));
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<BearerTokenForwardingHandler>();
+
 builder.Services.AddHttpClient<IDiscoveryServiceClient, DiscoveryServiceClient>(client =>
 {
     var baseUrl = builder.Configuration["Services:DiscoveryService:BaseUrl"];
@@ -54,6 +63,18 @@ builder.Services.AddHttpClient<IDiscoveryServiceClient, DiscoveryServiceClient>(
     client.BaseAddress = new Uri(baseUrl);
 });
 
+builder.Services.AddHttpClient<ITripServiceClient, TripServiceClient>(client =>
+{
+    var baseUrl = builder.Configuration["Services:TripService:BaseUrl"];
+
+    if (string.IsNullOrWhiteSpace(baseUrl))
+    {
+        throw new InvalidOperationException("The 'Services:TripService:BaseUrl' configuration value is missing.");
+    }
+
+    client.BaseAddress = new Uri(baseUrl);
+}).AddHttpMessageHandler<BearerTokenForwardingHandler>();
+
 builder.Services.AddHttpClient<IAIProvider, GeminiAIProvider>((sp, client) =>
 {
     var geminiSettings = sp.GetRequiredService<IOptions<GeminiSettings>>().Value;
@@ -61,6 +82,7 @@ builder.Services.AddHttpClient<IAIProvider, GeminiAIProvider>((sp, client) =>
 });
 
 builder.Services.AddScoped<ITripPlannerService, TripPlannerService>();
+builder.Services.AddScoped<IConversationService, ConversationService>();
 
 var app = builder.Build();
 

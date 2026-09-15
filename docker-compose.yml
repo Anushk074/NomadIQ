@@ -59,7 +59,26 @@ services:
       timeout: 5s
       retries: 10
 
+  ai-db:
+    image: postgres:16
+    container_name: nomadiq-ai-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: nomadiq_ai
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5435:5432"
+    volumes:
+      - nomadiq_ai_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d nomadiq_ai"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
 volumes:
   nomadiq_identity_db_data:
   nomadiq_trip_db_data:
   nomadiq_discovery_db_data:
+  nomadiq_ai_db_data:

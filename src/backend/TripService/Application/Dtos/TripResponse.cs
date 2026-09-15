@@ -13,5 +13,6 @@ public record TripResponse(
     string TravelStyle,
     TripStatus Status,
     DateTime CreatedAt,
-    DateTime UpdatedAt
+    DateTime UpdatedAt,
+    IReadOnlyList<ItineraryDayResponse> Days
 );
