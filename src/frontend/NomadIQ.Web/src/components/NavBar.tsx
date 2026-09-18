@@ -19,8 +19,10 @@ export function NavBar() {
   }
 
   return (
-    <nav>
-      <NavLink to={paths.home}>NomadIQ</NavLink>
+    <nav className="app-nav">
+      <NavLink to={paths.home} className="brand">
+        NomadIQ
+      </NavLink>
       <ul>
         {appLinks.map((item) => (
           <li key={item.to}>
@@ -30,9 +32,9 @@ export function NavBar() {
 
         {status === "authenticated" ? (
           <>
-            <li>{user?.email}</li>
+            <li className="nav-user">{user?.email}</li>
             <li>
-              <button type="button" onClick={handleLogout}>
+              <button type="button" className="btn" onClick={handleLogout}>
                 Logout
               </button>
             </li>

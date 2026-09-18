@@ -6,6 +6,8 @@ import { LoginPage } from "../features/auth/pages/LoginPage";
 import { RegisterPage } from "../features/auth/pages/RegisterPage";
 import { DashboardPage } from "../features/dashboard/pages/DashboardPage";
 import { DiscoveryPage } from "../features/discovery/pages/DiscoveryPage";
+import { NewTripPage } from "../features/trips/pages/NewTripPage";
+import { TripDetailsPage } from "../features/trips/pages/TripDetailsPage";
 import { TripsPage } from "../features/trips/pages/TripsPage";
 import { MainLayout } from "../layouts/MainLayout";
 import { HomePage } from "../pages/HomePage";
@@ -48,6 +50,22 @@ export function AppRouter() {
           element={
             <ProtectedRoute>
               <TripsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={paths.newTrip}
+          element={
+            <ProtectedRoute>
+              <NewTripPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={paths.tripDetailsPattern}
+          element={
+            <ProtectedRoute>
+              <TripDetailsPage />
             </ProtectedRoute>
           }
         />

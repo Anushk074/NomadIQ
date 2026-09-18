@@ -5,11 +5,11 @@ import { NavBar } from "../components/NavBar";
 // Feature-specific layouts can be introduced later without touching this one.
 export function MainLayout() {
   return (
-    <div>
-      <header>
+    <div className="app-shell">
+      <header className="app-header">
         <NavBar />
       </header>
-      <main>
+      <main className="app-main">
         <Outlet />
       </main>
     </div>

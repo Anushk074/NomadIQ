@@ -1,6 +1,8 @@
 // The only module allowed to touch storage directly for the access token.
 // Centralizing this keeps token handling out of feature pages/components -
-// AuthProvider is the sole consumer. See README for the storage trade-offs.
+// AuthProvider owns reading it at startup and after login/register/logout;
+// other features (e.g. trips) use `authorizationHeader` below rather than
+// reading storage themselves. See README for the storage trade-offs.
 const STORAGE_KEY = "nomadiq.accessToken";
 
 export const tokenStorage = {
@@ -29,3 +31,11 @@ export const tokenStorage = {
     }
   },
 };
+
+// Every authenticated call to a backend service needs the same
+// `Authorization: Bearer <token>` header. Deriving it here (instead of in
+// each feature's api module) keeps token handling in one place.
+export function authorizationHeader(): HeadersInit {
+  const token = tokenStorage.get();
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}
