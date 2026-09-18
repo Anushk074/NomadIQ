@@ -1,0 +1,38 @@
+:root {
+  --color-bg: #ffffff;
+  --color-text: #1a1a1a;
+  --color-muted: #6b6b6b;
+  --color-border: #e2e2e2;
+  --color-accent: #2f6fed;
+
+  font: 16px/1.5 system-ui, "Segoe UI", Roboto, sans-serif;
+  color-scheme: light dark;
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #14161a;
+    --color-text: #f0f0f0;
+    --color-muted: #a0a0a0;
+    --color-border: #2b2e34;
+    --color-accent: #6f9bff;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a {
+  color: var(--color-accent);
+}

@@ -1,0 +1,8 @@
+export function NotFoundPage() {
+  return (
+    <section>
+      <h1>404</h1>
+      <p>This page does not exist.</p>
+    </section>
+  );
+}
