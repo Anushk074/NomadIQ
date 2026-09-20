@@ -1,6 +1,6 @@
 import { appConfig } from "../config/env";
 import { ApiClient } from "./httpClient";
 
-// Foundation only - no AIService calls are implemented yet.
-// Future AI trip planner and travel assistant features will call this client.
+// Shared client for AIService. The typed calls live in the feature api
+// modules (e.g. features/planner/api/plannerApi.ts).
 export const aiApiClient = new ApiClient(appConfig.aiApiBaseUrl);

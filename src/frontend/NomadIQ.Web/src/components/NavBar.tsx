@@ -6,6 +6,7 @@ const appLinks: Array<{ to: string; label: string }> = [
   { to: paths.dashboard, label: "Dashboard" },
   { to: paths.trips, label: "Trips" },
   { to: paths.discovery, label: "Discover" },
+  { to: paths.planner, label: "AI Planner" },
   { to: paths.assistant, label: "AI Assistant" },
 ];
 

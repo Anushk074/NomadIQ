@@ -25,6 +25,21 @@ builder.Services.Configure<GeminiSettings>(builder.Configuration.GetSection(Gemi
 var jwtSettings = builder.Configuration.GetSection(JwtSettings.SectionName).Get<JwtSettings>()
     ?? throw new InvalidOperationException("The 'Jwt' configuration section is missing.");
 
+// Allows the React frontend (a different origin) to call this API from the browser.
+// Allowed origins are configuration-driven (see appsettings.Development.json) so
+// production origins can be set per environment without a code change.
+const string FrontendCorsPolicy = "Frontend";
+
+var corsSettings = builder.Configuration.GetSection(CorsSettings.SectionName).Get<CorsSettings>() ?? new CorsSettings();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(FrontendCorsPolicy, policy =>
+        policy.WithOrigins(corsSettings.AllowedOrigins)
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
+
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -93,6 +108,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(FrontendCorsPolicy);
 
 app.UseAuthentication();
 app.UseAuthorization();

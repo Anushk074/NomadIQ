@@ -5,6 +5,7 @@ const actions: Array<{ to: string; label: string }> = [
   { to: paths.newTrip, label: "Create Trip" },
   { to: paths.trips, label: "My Trips" },
   { to: paths.discovery, label: "Discover" },
+  { to: paths.planner, label: "AI Planner" },
   { to: paths.assistant, label: "AI Assistant" },
 ];
 

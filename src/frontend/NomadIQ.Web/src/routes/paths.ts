@@ -11,5 +11,6 @@ export const paths = {
   discovery: "/discovery",
   destinationDetailsPattern: "/discovery/:destinationId",
   destinationDetails: (destinationId: string) => `/discovery/${destinationId}`,
+  planner: "/planner",
   assistant: "/assistant",
 } as const;
