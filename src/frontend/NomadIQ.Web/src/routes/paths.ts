@@ -9,5 +9,7 @@ export const paths = {
   tripDetailsPattern: "/trips/:tripId",
   tripDetails: (tripId: string) => `/trips/${tripId}`,
   discovery: "/discovery",
+  destinationDetailsPattern: "/discovery/:destinationId",
+  destinationDetails: (destinationId: string) => `/discovery/${destinationId}`,
   assistant: "/assistant",
 } as const;

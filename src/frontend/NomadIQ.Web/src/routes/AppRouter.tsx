@@ -5,6 +5,7 @@ import { AssistantPage } from "../features/assistant/pages/AssistantPage";
 import { LoginPage } from "../features/auth/pages/LoginPage";
 import { RegisterPage } from "../features/auth/pages/RegisterPage";
 import { DashboardPage } from "../features/dashboard/pages/DashboardPage";
+import { DestinationDetailsPage } from "../features/discovery/pages/DestinationDetailsPage";
 import { DiscoveryPage } from "../features/discovery/pages/DiscoveryPage";
 import { NewTripPage } from "../features/trips/pages/NewTripPage";
 import { TripDetailsPage } from "../features/trips/pages/TripDetailsPage";
@@ -74,6 +75,14 @@ export function AppRouter() {
           element={
             <ProtectedRoute>
               <DiscoveryPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={paths.destinationDetailsPattern}
+          element={
+            <ProtectedRoute>
+              <DestinationDetailsPage />
             </ProtectedRoute>
           }
         />
