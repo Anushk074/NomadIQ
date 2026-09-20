@@ -100,6 +100,8 @@ export function validateTripForm(values: TripFormValues): TripFormErrors {
   return errors;
 }
 
-export function hasFormErrors(errors: TripFormErrors): boolean {
+// Generic so it also works for the day/activity form error shapes in
+// itineraryValidation.ts, without each defining its own identical check.
+export function hasFormErrors<T extends Record<string, string | undefined>>(errors: T): boolean {
   return Object.values(errors).some(Boolean);
 }

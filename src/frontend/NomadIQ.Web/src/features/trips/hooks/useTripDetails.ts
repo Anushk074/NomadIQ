@@ -13,7 +13,11 @@ export type TripDetailsState =
 // Fetches a single trip by id. The consuming page keys its subtree by
 // tripId (see TripDetailsPage) so a different id fully remounts this hook
 // instead of trying to reconcile state across ids.
-export function useTripDetails(tripId: string): { state: TripDetailsState; retry: () => void } {
+export function useTripDetails(tripId: string): {
+  state: TripDetailsState;
+  retry: () => void;
+  refresh: () => Promise<void>;
+} {
   const [state, setState] = useState<TripDetailsState>({ status: "loading" });
   const [attempt, setAttempt] = useState(0);
   const handleUnauthorized = useHandleUnauthorized();
@@ -56,5 +60,31 @@ export function useTripDetails(tripId: string): { state: TripDetailsState; retry
     setAttempt((n) => n + 1);
   }, []);
 
-  return { state, retry };
+  // Refetches in the background without dropping back to the loading state,
+  // so a day/activity mutation doesn't blank out the itinerary the user is
+  // already looking at (requirement: "keep the existing itinerary visible
+  // where possible"). If the refresh itself fails, it falls back to the
+  // same error state a failed initial load would show, rather than
+  // silently leaving stale data on screen indefinitely.
+  const refresh = useCallback(async () => {
+    try {
+      const trip = await getTrip(tripId);
+      setState({ status: "success", trip });
+    } catch (error) {
+      if (error instanceof ApiError && error.status === 401) {
+        handleUnauthorized();
+        return;
+      }
+
+      if (error instanceof ApiError && error.status === 404) {
+        setState({ status: "not-found" });
+        return;
+      }
+
+      const message = error instanceof ApiError ? error.message : "Something went wrong. Please try again.";
+      setState({ status: "error", message });
+    }
+  }, [tripId, handleUnauthorized]);
+
+  return { state, retry, refresh };
 }

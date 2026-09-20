@@ -6,6 +6,7 @@ import { TripDetailsCard } from "../components/TripDetailsCard";
 import { TripNotFound } from "../components/TripNotFound";
 import { TripsErrorState } from "../components/TripsErrorState";
 import { TripsLoadingState } from "../components/TripsLoadingState";
+import { Itinerary } from "../components/itinerary/Itinerary";
 import { useTripDetails } from "../hooks/useTripDetails";
 
 export function TripDetailsPage() {
@@ -21,7 +22,7 @@ export function TripDetailsPage() {
 }
 
 function TripDetailsContent({ tripId }: { tripId: string }) {
-  const { state, retry } = useTripDetails(tripId);
+  const { state, retry, refresh } = useTripDetails(tripId);
   const location = useLocation();
   const [isEditing, setIsEditing] = useState(false);
   const justCreated = Boolean((location.state as { created?: boolean } | null)?.created);
@@ -57,6 +58,8 @@ function TripDetailsContent({ tripId }: { tripId: string }) {
           ) : (
             <TripDetailsCard trip={state.trip} onEdit={() => setIsEditing(true)} />
           )}
+
+          <Itinerary tripId={tripId} trip={state.trip} onChanged={refresh} />
         </>
       )}
     </section>

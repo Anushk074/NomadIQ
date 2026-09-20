@@ -70,3 +70,31 @@ export interface UpdateTripRequest {
   travelStyle: string;
   status: TripStatus;
 }
+
+// Mirrors CreateItineraryDayRequest
+// (src/backend/TripService/Application/Dtos/CreateItineraryDayRequest.cs).
+export interface CreateItineraryDayRequest {
+  dayNumber: number;
+  date: string;
+  title: string;
+  notes: string | null;
+}
+
+// Mirrors UpdateItineraryDayRequest - the backend record has the identical
+// field list to CreateItineraryDayRequest (see UpdateItineraryDayRequest.cs).
+export type UpdateItineraryDayRequest = CreateItineraryDayRequest;
+
+// Mirrors CreateActivityRequest
+// (src/backend/TripService/Application/Dtos/CreateActivityRequest.cs).
+export interface CreateActivityRequest {
+  name: string;
+  description: string | null;
+  location: string | null;
+  estimatedCost: number | null;
+  startTime: string | null;
+  endTime: string | null;
+}
+
+// Mirrors UpdateActivityRequest - the backend record has the identical
+// field list to CreateActivityRequest (see UpdateActivityRequest.cs).
+export type UpdateActivityRequest = CreateActivityRequest;
