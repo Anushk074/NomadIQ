@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+import { paths } from "../../../routes/paths";
 import { formatTripBudget, formatTripDate } from "../format";
 import type { TripResponse } from "../types";
 import { DeleteTripAction } from "./DeleteTripAction";
@@ -15,6 +17,9 @@ export function TripDetailsCard({ trip, onEdit }: { trip: TripResponse; onEdit: 
           </span>
         </div>
         <div className="trip-details-actions">
+          <Link to={paths.assistantTrip(trip.id)} className="btn">
+            Ask AI Assistant
+          </Link>
           <button type="button" className="btn" onClick={onEdit}>
             Edit trip
           </button>

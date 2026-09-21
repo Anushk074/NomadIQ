@@ -96,7 +96,7 @@ export function AppRouter() {
           }
         />
         <Route
-          path={paths.assistant}
+          path={paths.assistantPattern}
           element={
             <ProtectedRoute>
               <AssistantPage />
